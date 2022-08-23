@@ -20,15 +20,6 @@ player.on('timeupdate', _.throttle(saveTime, 1000));
 
 // set current time from memory ------------------
 const currentTimeFromMemory = localStorage.getItem('videoplayer-current-time');
-player
-  .setCurrentTime(currentTimeFromMemory)
-  .then(function (seconds) {})
-  .catch(function (error) {
-    switch (error.name) {
-      case 'RangeError':
-        break;
-
-      default:
-        break;
-    }
-  });
+if (currentTimeFromMemory) {
+  player.setCurrentTime(currentTimeFromMemory);
+}

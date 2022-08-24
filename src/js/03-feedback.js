@@ -1,14 +1,14 @@
-import _ from 'lodash';
+import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 
 const STORAGE_KEY = 'feedback-form-state';
-const formData = {};
+let formData = {};
 
 textAreaAutoComplete();
 
-form.addEventListener('input', _.throttle(saveInput, 500));
-form.addEventListener('submit', _.throttle(onSubmitAction, 500));
+form.addEventListener('input', throttle(saveInput, 500));
+form.addEventListener('submit', throttle(onSubmitAction, 500));
 
 function saveInput(input) {
   formData[input.target.name] = input.target.value;
@@ -31,5 +31,6 @@ function onSubmitAction(e) {
   e.preventDefault();
   console.log(formData);
   e.target.reset();
+  formData = {};
   localStorage.removeItem(STORAGE_KEY);
 }
